@@ -1,7 +1,7 @@
 import streamlit as st
 import random
 import time
-from utils.ui_helpers import UIHelpers
+from ui_helpers import UIHelpers
 
 # Streamlit App Configuration
 st.set_page_config(page_title="Test Dashboard", layout="wide")

@@ -1,9 +1,9 @@
 import streamlit as st
 import time
 import obd
-from utils.obd_connector import OBDConnector 
-from utils.data_processor import DataProcessor
-from utils.ui_helpers import UIHelpers
+from obd_connector import OBDConnector 
+from data_processor import DataProcessor
+from ui_helpers import UIHelpers
 
 # Initialize OBD-II connection
 obd_conn = OBDConnector()

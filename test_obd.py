@@ -1,8 +1,8 @@
-from utils.obd_connector import OBDConnector
+from obd_connector import OBDConnector
 import obd
 
 # Initialize OBD Connector
-obd_conn = OBDConnector()
+obd_conn = OBDConnector(ip="192.168.0.10")
 obd_conn.connect()
 
 # Check Connection Status
@@ -27,5 +27,5 @@ for label, command in test_commands.items():
     print(f"{label}: {value}")
 
 # Close the connection after testing
-obd_conn.connection.close()
+obd_conn.disconnect()
 print("\n🔌 OBD-II Connection Closed.")
