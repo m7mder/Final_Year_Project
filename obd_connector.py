@@ -1,14 +1,15 @@
 import obd
+import socket
 
 class OBDConnector:
-    def __init__(self, port=None, baudrate=9600):
+    def __init__(self, ip, port=35000):
         """
-        Initialize OBD-II Bluetooth connection.
-        :param port: Bluetooth serial port (e.g., "/dev/rfcomm0" on Linux, "COM5" on Windows)
-        :param baudrate: Default baud rate for ELM327 devices
+        Initialize OBD-II WiFi connection.
+        :param ip: IP address of the WiFi OBD-II adapter
+        :param port: Port number for the WiFi OBD-II adapter
         """
+        self.ip = ip
         self.port = port
-        self.baudrate = baudrate
         self.connection = None
 
     def connect(self):
@@ -16,7 +17,7 @@ class OBDConnector:
         Establish connection with the OBD-II adapter.
         """
         try:
-            self.connection = obd.OBD()  # Auto-connect to the first available Bluetooth OBD device
+            self.connection = obd.OBD(f"socket://{self.ip}:{self.port}",baudrate=38400,timeout=1)  # Connect to the WiFi OBD device
             if self.connection.is_connected():
                 print("✅ Connected to OBD-II device successfully!")
             else:
@@ -42,15 +43,3 @@ class OBDConnector:
         if self.connection:
             self.connection.close()
             print("🔌 Disconnected from OBD-II device.")
-
-# Test the connection
-if __name__ == "__main__":
-    obd_conn = OBDConnector()
-    obd_conn.connect()
-    
-    print(f"🚗 Speed: {obd_conn.get_data(obd.commands.SPEED)}")
-    print(f"⚙️ RPM: {obd_conn.get_data(obd.commands.RPM)}")
-    print(f"⛽ Fuel Level: {obd_conn.get_data(obd.commands.FUEL_LEVEL)}")
-    print(f"🔥 Oil Temp: {obd_conn.get_data(obd.commands.OIL_TEMP)}")
-
-    obd_conn.disconnect()
